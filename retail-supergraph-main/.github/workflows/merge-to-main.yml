@@ -1,0 +1,111 @@
+name: merge-to-main
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+  APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  deploy-monolith:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to fly
+        run: flyctl deploy --remote-only
+
+  publish-schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: apollosolutions/rover-actions/install-rover-cli@v1
+
+      - name: Publish checkout schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: checkout
+          schema: ./subgraphs/checkout/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/checkout/graphql
+
+      - name: Publish discovery schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: discovery
+          schema: ./subgraphs/discovery/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/discovery/graphql
+
+      - name: Publish inventory schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: inventory
+          schema: ./subgraphs/inventory/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/inventory/graphql
+
+      - name: Publish orders schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: orders
+          schema: ./subgraphs/orders/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/orders/graphql
+
+      - name: Publish products schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: products
+          schema: ./subgraphs/products/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/products/graphql
+
+      - name: Publish reviews schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: reviews
+          schema: ./subgraphs/reviews/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/reviews/graphql
+
+      - name: Publish shipping schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: shipping
+          schema: ./subgraphs/shipping/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/shipping/graphql
+
+      - name: Publish users schema
+        uses: apollosolutions/rover-actions/subgraph-publish@v1
+        with:
+          apollo-key: ${{ secrets.APOLLO_KEY }}
+          graph-ref: ${{ vars.APOLLO_GRAPH_REF }}
+          name: users
+          schema: ./subgraphs/users/schema.graphql
+          routing-url: https://apollosolutions--retail-supergraph.fly.dev/users/graphql
+
+  publish-README:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: apollosolutions/rover-actions/install-rover-cli@v1
+
+      - name: Publish README
+        run: rover readme publish ${{ vars.APOLLO_GRAPH_REF }} --file README.md
