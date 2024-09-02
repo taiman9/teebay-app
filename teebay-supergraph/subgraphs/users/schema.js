@@ -1,4 +1,4 @@
-// src/schema.js
+// users/schema.js
 
 //import gql from '@apollo/subgraph';
 import gql from 'graphql-tag';
@@ -26,8 +26,8 @@ const typeDefs = gql`
       lastName: String!, 
       address: String!, 
       phoneNumber: String!
-    ): User
-    login(email: String!, password: String!): User
+    ): User!
+    login(email: String!, password: String!): User!
   }
 `;
 
