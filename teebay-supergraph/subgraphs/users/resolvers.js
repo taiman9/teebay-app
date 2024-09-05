@@ -5,6 +5,7 @@ const { User } = models;
 const resolvers = {
   Query: {
     users: async () => await User.findAll(),
+    user: async (_, { id }) => await User.findByPk(id),
   },
   Mutation: {
     // Register a new user
@@ -37,10 +38,6 @@ const resolvers = {
       const validpassword = await password === user.password;
       if (!validpassword) {
         throw new Error('Invalid password');
-      }
-      
-      if (!user.id){
-        user.id = 1;  
       }
       
       return user;

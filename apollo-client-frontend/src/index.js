@@ -1,21 +1,15 @@
 // src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';  // For React 18
 import App from './App';
+import { MultiApolloProvider } from './ApolloClients';  // Import the multi-subgraph Apollo Provider
 
-const client = new ApolloClient({
-  uri: 'http://localhost:4003/graphql', // Replace with your Apollo Federated GraphQL server URL
-  cache: new InMemoryCache(),
-});
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));  // Using React 18's createRoot
 
 root.render(
-  <ApolloProvider client={client}>
-    <Router>
+  <React.StrictMode>
+    <MultiApolloProvider>
       <App />
-    </Router>
-  </ApolloProvider>
+    </MultiApolloProvider>
+  </React.StrictMode>
 );

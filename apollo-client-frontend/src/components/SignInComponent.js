@@ -1,23 +1,17 @@
-// src/Login.js
+// src/components/SignInComponent.js
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Importing CSS for styling (create a CSS file for custom styling)
-
-// GraphQL mutation to login the user
-const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`;
+import { useUser } from '../context/UserContext';  // Import user context
+import './Login.css'; // Import CSS for styling
+import { LOGIN_USER } from '../mutations';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useUser();  // Use setUser from context to store user data
+
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
   const handleSubmit = async (e) => {
@@ -25,7 +19,8 @@ function Login() {
     try {
       const { data } = await loginUser({ variables: { email, password } });
       if (data) {
-        navigate('/dashboard'); // Redirect to the dashboard
+        setUser(data.login);  // Set user data in context after successful login
+        navigate('/dashboard');  // Redirect to the dashboard
       }
     } catch (err) {
       console.error(err);

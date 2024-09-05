@@ -1,10 +1,9 @@
 // users/schema.js
 
-//import gql from '@apollo/subgraph';
-import gql from 'graphql-tag';
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
-  type User {
+  type User @key(fields: "id") {
     id: ID!
     email: String!
     password: String!
@@ -16,6 +15,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User!]!
+    user(id: ID!): User
   }
 
   type Mutation {
@@ -27,6 +27,7 @@ const typeDefs = gql`
       address: String!, 
       phoneNumber: String!
     ): User!
+
     login(email: String!, password: String!): User!
   }
 `;

@@ -1,31 +1,8 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import './Register.css'; // Import CSS for styling
-
-// GraphQL mutation to register the user
-const REGISTER_USER = gql`
-  mutation RegisterUser(
-    $email: String!,
-    $password: String!,
-    $firstName: String!,
-    $lastName: String!,
-    $address: String!,
-    $phoneNumber: String!
-  ) {
-    register(
-      email: $email,
-      password: $password,
-      firstName: $firstName,
-      lastName: $lastName,
-      address: $address,
-      phoneNumber: $phoneNumber
-    ) {
-      id
-      email
-    }
-  }
-`;
+import { REGISTER_USER } from '../mutations';
 
 function Register() {
     const [email, setEmail] = useState('');

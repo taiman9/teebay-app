@@ -1,9 +1,25 @@
 {
+  "name": "apollo-federation",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "gateway",
+    "subgraphs/*"
+  ],
+  "scripts": {
+    "start:gateway": "node gateway/index.js",
+    "start:users": "node subgraphs/users/server.js",
+    "start:products": "node subgraphs/products/server.js",
+    "start:all": "concurrently \"npm run start:users\" \"npm run start:products\""
+  },
   "dependencies": {
-    "@apollo/gateway": "^2.9.0",
+    "@apollo/server": "^4.11.0",
     "@apollo/subgraph": "^2.9.0",
-    "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
-    "graphql": "^16.9.0"
-  }
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
+    "concurrently": "^7.0.0" 
+  },
+  "type": "module"
 }
