@@ -8,6 +8,7 @@ const typeDefs = gql`
     description: String!
     price: Float!
     userId: ID!
+    createdAt: String!
     categories: [Category!]!
   }
 
@@ -18,6 +19,7 @@ const typeDefs = gql`
 
   extend type Query {
     products(userId: ID): [Product!]!  # Query products, optionally filter by userId
+    product(id: ID!): Product!  # Query a single product by ID
     categories: [Category!]!
   }
 
@@ -31,12 +33,13 @@ const typeDefs = gql`
     ): Product!
 
     editProduct(
-      id: ID!,
+      id: ID!,  # Product ID to edit
       title: String,
       description: String,
       price: Float,
       categoryIds: [Int!]
-    ): Product!
+    ): Product!  # Returns the updated product
+
 
     deleteProduct(id: ID!): Boolean!
   }

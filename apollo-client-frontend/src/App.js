@@ -1,6 +1,7 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//import { MantineProvider } from '@mantine/core';  // Import MantineProvider
 import { UserProvider } from './context/UserContext';  // Import user context provider
 import Login from './components/SignInComponent';  // Import SignInComponent
 import Register from './components/RegisterComponent';
@@ -8,6 +9,7 @@ import Dashboard from './Dashboard';  // Assume Dashboard has AddProductComponen
 
 function App() {
   return (
+    // Wrap the entire app with MantineProvider
     <UserProvider>
       <Router>
         <Routes>
@@ -32,7 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />  {/* Correct usage of SignInComponent */}
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard/*" element={<Dashboard />} />  {/* Show Dashboard after login */}
-        {/* Add other routes as needed */}
+          {/* Add other routes as needed */}
         </Routes>
       </Router>
     </UserProvider>

@@ -10,7 +10,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useUser();  // Use setUser from context to store user data
+  const { login } = useUser();  // Use login function from context to store user data
 
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
@@ -19,7 +19,7 @@ function Login() {
     try {
       const { data } = await loginUser({ variables: { email, password } });
       if (data) {
-        setUser(data.login);  // Set user data in context after successful login
+        login(data.login);  // Call the login function from context after successful login
         navigate('/dashboard');  // Redirect to the dashboard
       }
     } catch (err) {

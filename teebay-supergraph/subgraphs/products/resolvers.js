@@ -16,6 +16,16 @@ const resolvers = {
         categories: product.categories || [],  // Return an empty array if categories is null
       }));
     },
+    // Fetch a single product by ID
+    product: async (_, { id }) => {
+      const product = await Product.findByPk(id, {
+        include: [{ model: Category, as: 'categories' }],
+      });
+      if (!product) {
+        throw new Error('Product not found');
+      }
+      return product;
+    },
     // Fetch all categories
     categories: async () => await Category.findAll(),
   },
@@ -38,6 +48,28 @@ const resolvers = {
       });
 
       return newProduct;
+    },
+    // Edit an existing product
+    editProduct: async (_, { id, title, description, price, categoryIds }) => {
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw new Error('Product not found');
+      }
+
+      // Update product fields if provided
+      if (title !== undefined) product.title = title;
+      if (description !== undefined) product.description = description;
+      if (price !== undefined) product.price = price;
+
+      await product.save();
+
+      if (categoryIds) {
+        // Update categories associations
+        const categories = await Category.findAll({ where: { id: categoryIds } });
+        await product.setCategories(categories);
+      }
+
+      return product;
     },
   },
   Product: {

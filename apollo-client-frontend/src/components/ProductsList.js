@@ -1,44 +1,56 @@
 // src/components/ProductsList.js
-import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_PRODUCTS } from '../mutations';  // Import the query to fetch products
+import { useNavigate } from 'react-router-dom';  // Import Link and useNavigate for navigation
+import './ProductsList.css';  // Import CSS for styling
 
-// GraphQL query to fetch all products
-const GET_ALL_PRODUCTS = gql`
-  query GetAllProducts {
-    products {
-      id
-      title
-      description
-      price
-      categories {
-        id
-        name
-      }
-      owner {
-        id
-      }
-    }
-  }
-`;
+// Helper function to format date
+const formatDate = (timestamp) => {
+  if (!timestamp) return 'Invalid Date';  // Check for null or undefined values
 
-function ProductsList() {
-  const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+  const date = new Date(parseInt(timestamp, 10));  // Convert timestamp to a Date object
+  if (isNaN(date.getTime())) return 'Invalid Date';  // Check if the date is valid
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };  // e.g., January 1, 2024
+  return date.toLocaleDateString(undefined, options);  // Format the date
+};
+
+// ProductsList component
+function ProductsList({ userId }) {  // Accept userId as a prop
+  const navigate = useNavigate();  // Hook to navigate programmatically
+
+  // Fetch products from the server with userId filter
+  const { loading, error, data, refetch } = useQuery(GET_ALL_PRODUCTS, {
+    variables: { userId },  // Filter products by userId
+    fetchPolicy: 'network-only',  // Always fetch from the network to ensure fresh data
+  });
+
+  // Refetch products when the component is mounted or when userId changes
+  useEffect(() => {
+    refetch();  // Refetch products from the server
+  }, [refetch, userId]);  // Run the effect when refetch function or userId changes
+
+  if (loading) return <p>Loading products...</p>;
+  if (error) return <p>Error loading products: {error.message}</p>;
 
   return (
-    <div>
-      <h2>Products List</h2>
-      {data.products.map((product) => (
-        <div key={product.id}>
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <p>Price: ${product.price}</p>
-          <p>Owner ID: {product.owner.id}</p>
-          <p>Categories: {product.categories.map((category) => category.name).join(', ')}</p>
-        </div>
-      ))}
+    <div className="products-list">
+      <h2>My Products</h2>
+
+      {/* Render Products */}
+      <div className="products-container">
+        {data.products.map((product) => (
+          <div key={product.id} className="product-card">
+            <h3>{product.title}</h3>
+            <p><strong>Description:</strong> {product.description}</p>
+            <p><strong>Price:</strong> ${product.price}</p>
+            <p><strong>Categories:</strong> {product.categories.map(category => category.name).join(', ')}</p>
+            <p><strong>Date Posted:</strong> {formatDate(product.createdAt)}</p>  {/* Display the formatted date */}
+            <button onClick={() => navigate(`/dashboard/edit-product/${product.id}`)}>Edit</button>  {/* Navigate to EditProduct */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
