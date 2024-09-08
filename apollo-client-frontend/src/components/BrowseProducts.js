@@ -1,10 +1,8 @@
-// src/components/ProductsList.js
+// src/components/BrowseProducts.js
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../mutations';  // Import the query to fetch products
-import { useNavigate } from 'react-router-dom';  // Import Link and useNavigate for navigation
-import DeleteProduct from './DeleteProduct';  // Import DeleteProduct component
-import './ProductsList.css';  // Import CSS for styling
+import { BROWSE_PRODUCTS } from '../mutations';  // Import the query to fetch products
+import './BrowseProducts.css';  // Import CSS for styling
 
 // Helper function to format date
 const formatDate = (timestamp) => {
@@ -17,13 +15,10 @@ const formatDate = (timestamp) => {
   return date.toLocaleDateString(undefined, options);  // Format the date
 };
 
-// ProductsList component
-function ProductsList({ userId }) {  // Accept userId as a prop
-  const navigate = useNavigate();  // Hook to navigate programmatically
-
-  // Fetch products from the server with userId filter
-  const { loading, error, data, refetch } = useQuery(GET_ALL_PRODUCTS, {
-    variables: { userId },  // Filter products by userId
+function BrowseProducts({ userId }) {
+  // Fetch products not owned by the given userId
+  const { loading, error, data, refetch } = useQuery(BROWSE_PRODUCTS, {
+    variables: { userId },  // Pass userId to filter out the products owned by the user
     fetchPolicy: 'network-only',  // Always fetch from the network to ensure fresh data
   });
 
@@ -36,28 +31,27 @@ function ProductsList({ userId }) {  // Accept userId as a prop
   if (error) return <p>Error loading products: {error.message}</p>;
 
   return (
-    <div className="products-list">
-      <h2>My Products</h2>
+    <div className="browse-products">
+      <h2>Browse Products</h2>
 
       {/* Render Products */}
       <div className="products-container">
-        {data.products.map((product) => (
+        {data.browseProducts.map((product) => (
           <div key={product.id} className="product-card">
             <h3>{product.title}</h3>
             <p><strong>Description:</strong> {product.description}</p>
-            <p><strong>Price:</strong> ${product.price}</p>
+            <p><strong>Price:</strong> ${product.price.toFixed(2)}</p>
             <p><strong>Categories:</strong> {product.categories.map(category => category.name).join(', ')}</p>
             <p><strong>Date Posted:</strong> {formatDate(product.createdAt)}</p>  {/* Display the formatted date */}
             <div className="product-actions">
-              {/* Smaller Edit button */}
-              <button
-                className="small-btn"
-                onClick={() => navigate(`/dashboard/edit-product/${product.id}`)}
-              >
-                Edit
+              {/* Buy button */}
+              <button className="action-btn buy-btn">
+                Buy
               </button>
-              {/* Delete button */}
-              <DeleteProduct productId={product.id} onProductDeleted={refetch} />
+              {/* Rent button */}
+              <button className="action-btn rent-btn">
+                Rent
+              </button>
             </div>
           </div>
         ))}
@@ -66,4 +60,4 @@ function ProductsList({ userId }) {  // Accept userId as a prop
   );
 }
 
-export default ProductsList;
+export default BrowseProducts;

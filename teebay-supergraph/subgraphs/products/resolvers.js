@@ -28,7 +28,35 @@ const resolvers = {
     },
     // Fetch all categories
     categories: async () => await Category.findAll(),
+
+    // New resolver to fetch all products not owned by the given userId
+    browseProducts: async (_, { userId }) => {
+      try {
+        // Fetch products where userId is not equal to the given userId
+        const products = await Product.findAll({
+          where: {
+            userId: { [models.Sequelize.Op.ne]: userId }  // Using Sequelize.Op.ne for "not equal" condition
+          },
+          include: [{ model: Category, as: 'categories' }],
+        });
+
+        // Return an empty array if no products are found instead of null
+        if (!products) {
+          return [];
+        }
+
+        // Map the products and include the associated categories
+        return products.map(product => ({
+          ...product.toJSON(),
+          categories: product.categories || [],
+        }));
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];  // Return an empty array in case of an error
+      }
+    },
   },
+
   Mutation: {
     // Add a new product
     addProduct: async (_, { title, description, price, userId, categoryIds }) => {
@@ -61,6 +89,15 @@ const resolvers = {
       if (description !== undefined) product.description = description;
       if (price !== undefined) product.price = price;
 
+      // Update categoryIds directly in the product model
+      if (categoryIds) {
+        // Log the categoryIds to the terminal
+        console.log('Category IDs to be updated:', categoryIds);
+        product.categoryIds = categoryIds;  // Update the categoryIds field
+      } else {
+        throw new Error('Category Ids not found');
+      }
+
       await product.save();
 
       if (categoryIds) {
@@ -71,7 +108,42 @@ const resolvers = {
 
       return product;
     },
+    
+   // Delete an existing product
+   deleteProduct: async (_, { id }) => {
+    try {
+      const product = await Product.findByPk(id);  // Find the product by ID
+      if (!product) {
+        console.error(`Product with ID ${id} not found.`);
+        return false;  // Return false if the product does not exist
+      }
+
+      // Ensure product's userId references a valid user
+      const userExists = await User.findByPk(product.userId);
+      if (!userExists) {
+        console.error(`User with ID ${product.userId} not found.`);
+        return false;  // Return false if the user does not exist
+      }
+
+      // Remove associations with categories before deletion
+      await product.setCategories([]);  // Clear associated categories
+
+      // Delete product directly by ID
+      await Product.destroy({
+        where: {
+          id: id,  // Use the product ID to specify which product to delete
+        },
+      });
+
+      console.log(`Product with ID ${id} successfully deleted.`);
+      return true;  // Return true if the deletion was successful
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      return false;  // Return false if an error occurred
+      }
+    },
   },
+
   Product: {
     // Resolver for fetching associated categories of a product
     categories: async (product) => {

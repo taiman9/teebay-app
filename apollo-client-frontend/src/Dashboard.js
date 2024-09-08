@@ -4,8 +4,9 @@ import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
-//import ProductCacheReader from './components/ProductCacheReader';
+import BrowseProducts from './components/BrowseProducts';  // Import BrowseProducts component
 import { useUser } from './context/UserContext';
+import './Dashboard.css';  // Import the CSS file for styling
 
 function Dashboard() {
   const { user, logout } = useUser();
@@ -22,48 +23,24 @@ function Dashboard() {
   }
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      
-      {/* Logout Button */}
-      <button 
-        onClick={handleLogout} 
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '20px',
-          backgroundColor: 'red',
-          color: 'white',
-          border: 'none',
-          padding: '5px 10px',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          width: '80px',  // Set a fixed width to reduce the button size
-          textAlign: 'center'
-        }}
-      >
-        Logout
-      </button>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Your Dashboard</h1>
+        {/* Logout Button */}
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
       
       <div>
-        <h2>Product Management</h2>
+        <h2>Manage Products</h2>
         
-        {/* Link to Add Product Component */}
-        <section>
-          <h2>Add Product Link</h2>
-          <p>
-            <Link to="/dashboard/add-product">Add Product</Link>
-          </p>
-        </section>
-
-        {/* Link to View Products */}
-        <section>
-          <h2>View Products</h2>
-          <p>
-            <Link to="/dashboard/products">View My Products</Link>
-          </p>
-        </section>
+        {/* Links for Add Product, View Products, and Browse Products side by side */}
+        <div className="dashboard-links">
+          <Link to="/dashboard/add-product" className="link-button">Add Product</Link>
+          <Link to="/dashboard/products" className="link-button">View My Products</Link>
+          <Link to="/dashboard/browse-products" className="link-button">Browse Products</Link> {/* New link for Browse Products */}
+        </div>
 
         {/* Define Routes within the Dashboard component */}
         <Routes>
@@ -77,6 +54,12 @@ function Dashboard() {
           <Route
             path="products"
             element={<ProductsList userId={user.id} />}
+          />
+          
+          {/* Route for browsing products not owned by the user */}
+          <Route
+            path="browse-products"
+            element={<BrowseProducts userId={user.id} />}  // Pass userId to BrowseProducts component
           />
           
           {/* Route for editing a product by productId */}

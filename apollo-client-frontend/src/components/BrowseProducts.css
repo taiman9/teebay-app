@@ -1,0 +1,91 @@
+/* src/components/BrowseProducts.css */
+
+/* Container for the browse products page */
+.browse-products {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .browse-products h2 {
+    font-size: 28px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Container for the products */
+  .products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;  /* Center the products */
+  }
+  
+  /* Styling for each product card */
+  .product-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);  /* Slight lift on hover */
+  }
+  
+  .product-card h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .product-card p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Styling for the product actions (buttons) */
+  .product-actions {
+    display: flex;
+    gap: 10px;  /* Space between the buttons */
+    margin-top: 15px;
+  }
+  
+  /* Base styling for action buttons */
+.action-btn {
+    width: 100px; /* Fixed width for smaller buttons */
+    padding: 10px 15px; /* Smaller padding */
+    border: none;
+    border-radius: 5px;
+    font-size: 15px; /* Smaller font size */
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Buy button styling */
+  .buy-btn {
+    background-color: #27ae60; /* Green color */
+  }
+  
+  .buy-btn:hover {
+    background-color: #219150; /* Darker green on hover */
+  }
+  
+  /* Rent button styling */
+  .rent-btn {
+    background-color: #3498db; /* Blue color */
+  }
+  
+  .rent-btn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+  }
+  

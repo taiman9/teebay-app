@@ -1,38 +1,52 @@
-.App {
+/* src/App.css */
+
+/* Container for the homepage */
+.homepage-container {
+  max-width: 1200px;  /* Increase the max-width for a larger container */
+  margin: 50px auto;  /* Center the container and add vertical margin */
+  padding: 60px 40px;  /* Increase padding for more space inside the container */
   text-align: center;
+  background-color: #f7f7f7; /* Light gray background */
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;  /* Flexbox for centering */
+  flex-direction: column;  /* Vertical stacking of elements */
+  align-items: center;  /* Center align items horizontally */
+  justify-content: center;  /* Center align items vertically */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Title styling */
+.homepage-title {
+  font-size: 42px;  /* Larger font size for the title */
+  color: #1a4874; /* Darker color for the title */
+  margin-bottom: 20px;  /* Increase bottom margin for spacing */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Subtitle styling */
+.homepage-subtitle {
+  font-size: 24px;  /* Increase font size for the subtitle */
+  color: #555; /* Medium gray color for the subtitle */
+  margin-bottom: 40px;  /* Increase bottom margin for spacing */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Section styling */
+.homepage-section {
+  margin-top: 30px;  /* Increase top margin */
+}
+
+/* Link button styling */
+.link-button {
+  display: inline-block;
+  padding: 15px 30px;  /* Larger padding for more prominent buttons */
+  margin: 20px;  /* Increase margin for spacing */
+  background-color: #3498db; /* Blue color for the button */
   color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;  /* Increase font size for readability */
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.link-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
 }

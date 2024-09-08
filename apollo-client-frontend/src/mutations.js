@@ -108,6 +108,22 @@ export const GET_PRODUCT_BY_ID = gql`
   }
 `;
 
+export const BROWSE_PRODUCTS = gql`
+  query BrowseProducts($userId: ID!) {
+    browseProducts(userId: $userId) {
+      id
+      title
+      description
+      price
+      categories {
+        id
+        name
+      }
+      createdAt
+    }
+  }
+`;
+
 // Mutation to edit a product
 export const EDIT_PRODUCT = gql`
   mutation EditProduct(
@@ -133,5 +149,13 @@ export const EDIT_PRODUCT = gql`
         name
       }
     }
+  }
+`;
+
+
+// Mutation to delete a product
+export const DELETE_PRODUCT = gql`
+  mutation DeleteProduct($id: ID!) {
+    deleteProduct(id: $id)
   }
 `;

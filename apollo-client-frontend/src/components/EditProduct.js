@@ -1,4 +1,3 @@
-// src/components/EditProduct.js
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';  // Import React Select
 import { useMutation, useQuery } from '@apollo/client';
@@ -56,6 +55,9 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
 
     // Convert selected categories back to an array of integers
     const categoryIds = selectedCategories.map((category) => parseInt(category.value, 10));
+
+    // Check if categoryIds array is correctly formed
+    console.log('Updated category IDs:', categoryIds);
 
     // Execute the mutation to update the product
     editProduct({

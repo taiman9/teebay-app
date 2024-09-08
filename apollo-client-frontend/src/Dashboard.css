@@ -1,0 +1,120 @@
+/* src/Dashboard.css */
+
+/* Container for the entire dashboard */
+.dashboard-container {
+    max-width: 1400px;  /* Increase max-width for a larger container */
+    margin: 50px auto;  /* Center the container with vertical margin */
+    padding: 40px;  /* Increase padding for more space inside the container */
+    background-color: #f4f4f4;
+    border-radius: 12px;  /* Increase border radius for a smoother curve */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Slightly deeper shadow */
+    display: flex;  /* Flexbox for centering */
+    flex-direction: column;  /* Stack elements vertically */
+    align-items: center;  /* Center align items horizontally */
+    justify-content: flex-start;  /* Align items to the top */
+    position: relative;  /* For absolute positioning of logout button */
+    min-height: 80vh;  /* Minimum height to increase vertical length */
+    height: auto;  /* Let the height adjust based on content */
+}
+
+/* Header styling */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;  /* Full width for header */
+    margin-bottom: 30px;  /* Increase bottom margin for spacing */
+    padding: 0 20px;  /* Add padding to match container */
+}
+
+/* Dashboard title styling */
+.dashboard-title {
+    font-size: 32px;  /* Increase font size for the title */
+    color: #333;
+    margin: 0;
+}
+
+/* Logout button styling */
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;  /* Increase padding */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;  /* Increase font size */
+    position: absolute;
+    top: 30px;  /* Adjust positioning */
+    right: 30px;  /* Adjust positioning */
+    width: 120px;  /* Increase button width */
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* Section container styling */
+.dashboard-section {
+    background-color: #ffffff;
+    border-radius: 10px;  /* Slightly increase border radius */
+    padding: 20px;
+    margin-bottom: 25px;  /* Increase margin for better spacing */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;  /* Make sections full width */
+    max-width: 800px;  /* Limit maximum width for better readability */
+}
+
+/* Dashboard section headings */
+.dashboard-section h2 {
+    margin-top: 0;
+    font-size: 22px;  /* Increase font size */
+    color: #444;
+}
+
+/* Paragraph styling within sections */
+.dashboard-section p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Link styling */
+.dashboard-section a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dashboard-section a:hover {
+    text-decoration: underline;
+}
+
+/* Container for the links to display them side by side */
+.dashboard-links {
+    display: flex;
+    justify-content: center;  /* Center the links */
+    align-items: center;  /* Center vertically */
+    gap: 40px;  /* Increase space between the links */
+    margin-bottom: 30px;  /* Increase space below the links */
+    width: 100%;  /* Ensure it takes full width */
+    padding: 30px 0;  /* Add more padding for spacing */
+}
+
+/* Style for the link buttons */
+.link-button {
+    display: inline-block;
+    padding: 12px 25px;  /* Increase padding */
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 18px;  /* Increase font size for better visibility */
+}
+
+.link-button:hover {
+    background-color: #2980b9;
+}

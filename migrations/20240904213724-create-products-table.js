@@ -28,7 +28,6 @@ module.exports = {
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       categoryIds: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),  // Assuming categories are stored as an array of integers
