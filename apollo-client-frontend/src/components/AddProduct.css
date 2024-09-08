@@ -1,43 +1,56 @@
-/* src/components/AddProduct.css */
 .add-product-form {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-step {
-    margin-bottom: 20px;
-  }
-  
-  .form-input {
-    width: 80%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .btn {
-    margin: 5px;
-    padding: 10px 15px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .error-message {
-    color: red;
-    margin: 10px 0;
-  }
-  
-  .success-message {
-    color: green;
-    margin: 10px 0;
-  }
-  
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-step {
+  margin-bottom: 20px;
+  position: relative;  /* Position relative to arrange buttons */
+}
+
+.form-input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;  /* Place buttons at opposite ends */
+  align-items: center;
+  margin-top: 10px;  /* Margin for spacing */
+}
+
+.btn {
+  padding: 5px 10px;  /* Smaller padding for smaller buttons */
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;  /* Smaller font size */
+  min-width: 70px;  /* Minimum width to keep buttons consistent */
+  max-width: 120px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;  /* Darker blue on hover */
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}
+
+.success-message {
+  color: green;
+  margin: 10px 0;
+}

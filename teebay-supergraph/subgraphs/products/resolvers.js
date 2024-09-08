@@ -1,4 +1,3 @@
-// products/resolvers.js
 import models from '../../../models/index.js';  // Import User model to check user existence
 const { Product, Category, User } = models;
 
@@ -59,7 +58,7 @@ const resolvers = {
 
   Mutation: {
     // Add a new product
-    addProduct: async (_, { title, description, price, userId, categoryIds }) => {
+    addProduct: async (_, { title, description, price, rentPrice, userId, categoryIds }) => {
       // Check if user exists
       const userExists = await User.findByPk(userId);
       if (!userExists) {
@@ -71,6 +70,7 @@ const resolvers = {
         title,
         description,
         price,
+        rentPrice: rentPrice || null,  // Allow null for rentPrice
         userId,
         categoryIds,
       });
@@ -78,7 +78,7 @@ const resolvers = {
       return newProduct;
     },
     // Edit an existing product
-    editProduct: async (_, { id, title, description, price, categoryIds }) => {
+    editProduct: async (_, { id, title, description, price, rentPrice, categoryIds }) => {
       const product = await Product.findByPk(id);
       if (!product) {
         throw new Error('Product not found');
@@ -88,10 +88,10 @@ const resolvers = {
       if (title !== undefined) product.title = title;
       if (description !== undefined) product.description = description;
       if (price !== undefined) product.price = price;
+      if (rentPrice !== undefined) product.rentPrice = rentPrice;  // Allow updating to null
 
       // Update categoryIds directly in the product model
       if (categoryIds) {
-        // Log the categoryIds to the terminal
         console.log('Category IDs to be updated:', categoryIds);
         product.categoryIds = categoryIds;  // Update the categoryIds field
       } else {

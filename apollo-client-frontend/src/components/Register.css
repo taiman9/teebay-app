@@ -1,76 +1,95 @@
 /* src/Register.css */
+
 .register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f9f9f9;
-  }
-  
-  .register-box, .success-message {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  button {
-    width: 60%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .signin-text {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .signin-link {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  .signin-link:hover {
-    color: #0056b3;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .success-message {
-    text-align: center;
-  }
-  
-  .success-message p {
-    margin-top: 10px;
-    color: #28a745;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  padding: 40px; /* Add padding for more space */
+  position: relative; /* Position relative to place the homepage link */
+}
+
+/* Styling for the Homepage link */
+.home-link {
+  position: absolute; /* Position it relative to the register box */
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left */
+  font-size: 14px; /* Font size */
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Make the text bold */
+}
+
+.home-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+.register-box, .success-message {
+  width: 300px; /* Smaller width for a compact container */
+  padding: 30px; /* Adequate padding for content */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* Position relative to accommodate the absolute positioned homepage link */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  width: 60%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.signin-text {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signin-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.signin-link:hover {
+  color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  text-align: center;
+}
+
+.success-message p {
+  margin-top: 10px;
+  color: #28a745;
+}

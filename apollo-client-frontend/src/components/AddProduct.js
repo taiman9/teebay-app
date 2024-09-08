@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { useMutation, useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import { GET_ALL_CATEGORIES, ADD_PRODUCT } from '../mutations';
 import './AddProduct.css';  // Import the CSS file for styling
 
@@ -12,6 +12,7 @@ function AddProduct({ userId, onProductAdded }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [rentPrice, setRentPrice] = useState('');  // State to hold the rent price, allow empty string for null
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [errors, setErrors] = useState({});  // State to hold error messages
   const [successMessage, setSuccessMessage] = useState('');  // State to hold success message
@@ -32,6 +33,7 @@ function AddProduct({ userId, onProductAdded }) {
       setTitle('');
       setDescription('');
       setPrice('');
+      setRentPrice('');  // Reset rent price
       setSelectedCategories([]);
       setStep(1);  // Reset to the first step
       if (onProductAdded) onProductAdded();  // Callback to refresh the product list or show a success message
@@ -62,6 +64,10 @@ function AddProduct({ userId, onProductAdded }) {
       if (isNaN(parsedPrice) || parsedPrice <= 0) {
         newErrors.price = 'Invalid price. Price must be a positive number.';
       }
+      // rentPrice can be empty or a valid positive number
+      if (rentPrice && (isNaN(parseFloat(rentPrice)) || parseFloat(rentPrice) <= 0)) {
+        newErrors.rentPrice = 'Invalid rent price. Rent price must be a positive number or left empty.';
+      }
     }
 
     setErrors(newErrors);
@@ -74,12 +80,14 @@ function AddProduct({ userId, onProductAdded }) {
     if (!validateStep()) return;  // Prevent submission if validation fails
 
     const parsedPrice = parseFloat(price);
+    const parsedRentPrice = rentPrice !== '' ? parseFloat(rentPrice) : null;  // Handle null value for rentPrice
 
     addProduct({
       variables: {
         title,
         description,
         price: parsedPrice,
+        rentPrice: parsedRentPrice,  // Include rent price in variables
         userId,
         categoryIds: selectedCategories,
       },
@@ -118,7 +126,9 @@ function AddProduct({ userId, onProductAdded }) {
               className="form-input"
             />
             {errors.title && <p className="error-message">{errors.title}</p>}
-            <button type="button" className="btn" onClick={nextStep}>Next</button>
+            <div className="button-container">
+              <button type="button" className="btn" onClick={nextStep}>Next</button>
+            </div>
           </div>
         );
       case 2:
@@ -136,8 +146,10 @@ function AddProduct({ userId, onProductAdded }) {
               placeholder="Type to search categories..."
             />
             {errors.categories && <p className="error-message">{errors.categories}</p>}
-            <button type="button" className="btn" onClick={prevStep}>Back</button>
-            <button type="button" className="btn" onClick={nextStep}>Next</button>
+            <div className="button-container">
+              <button type="button" className="btn" onClick={prevStep}>Back</button>
+              <button type="button" className="btn" onClick={nextStep}>Next</button>
+            </div>
           </div>
         );
       case 3:
@@ -153,14 +165,16 @@ function AddProduct({ userId, onProductAdded }) {
               rows="4"
             />
             {errors.description && <p className="error-message">{errors.description}</p>}
-            <button type="button" className="btn" onClick={prevStep}>Back</button>
-            <button type="button" className="btn" onClick={nextStep}>Next</button>
+            <div className="button-container">
+              <button type="button" className="btn" onClick={prevStep}>Back</button>
+              <button type="button" className="btn" onClick={nextStep}>Next</button>
+            </div>
           </div>
         );
       case 4:
         return (
           <div className="form-step">
-            <h2>Select Price</h2>
+            <h2>Select Price and Rent Price</h2>
             <input
               type="number"
               step="0.01"
@@ -171,8 +185,19 @@ function AddProduct({ userId, onProductAdded }) {
               className="form-input"
             />
             {errors.price && <p className="error-message">{errors.price}</p>}
-            <button type="button" className="btn" onClick={prevStep}>Back</button>
-            <button type="button" className="btn" onClick={nextStep}>Next</button>
+            <input
+              type="number"
+              step="0.01"
+              placeholder="Rent Price per Day (Optional)"
+              value={rentPrice}
+              onChange={(e) => setRentPrice(e.target.value)}
+              className="form-input"
+            />
+            {errors.rentPrice && <p className="error-message">{errors.rentPrice}</p>}
+            <div className="button-container">
+              <button type="button" className="btn" onClick={prevStep}>Back</button>
+              <button type="button" className="btn" onClick={nextStep}>Next</button>
+            </div>
           </div>
         );
       case 5:
@@ -183,8 +208,11 @@ function AddProduct({ userId, onProductAdded }) {
             <p><strong>Categories:</strong> {selectedCategories.map(id => categoryOptions.find(option => option.value === id.toString())?.label).join(', ')}</p>
             <p><strong>Description:</strong> {description}</p>
             <p><strong>Price:</strong> ${price}</p>
-            <button type="button" className="btn" onClick={prevStep}>Back</button>
-            <button type="button" className="btn" onClick={handleSubmit} disabled={addProductLoading}>Submit</button>
+            <p><strong>Rent Price per Day:</strong> {rentPrice ? `$${rentPrice}` : 'N/A'}</p> {/* Display N/A if rentPrice is null */}
+            <div className="button-container">
+              <button type="button" className="btn" onClick={prevStep}>Back</button>
+              <button type="button" className="btn" onClick={handleSubmit} disabled={addProductLoading}>Submit</button>
+            </div>
           </div>
         );
       default:

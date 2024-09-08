@@ -5,6 +5,7 @@ import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
 import BrowseProducts from './components/BrowseProducts';  // Import BrowseProducts component
+import PurchaseProduct from './components/PurchaseProduct';  // Import PurchaseProduct component
 import { useUser } from './context/UserContext';
 import './Dashboard.css';  // Import the CSS file for styling
 
@@ -61,7 +62,13 @@ function Dashboard() {
             path="browse-products"
             element={<BrowseProducts userId={user.id} />}  // Pass userId to BrowseProducts component
           />
-          
+
+          {/* Route for purchasing a product */}
+          <Route
+            path="purchase-product/:productId"
+            element={<PurchaseProductRoute />}
+          />
+
           {/* Route for editing a product by productId */}
           <Route
             path="edit-product/:productId"
@@ -88,6 +95,15 @@ function EditProductRoute() {
         navigate('/dashboard/products');
       }}
     />
+  );
+}
+
+// Wrapper component to handle route params and pass them to PurchaseProduct
+function PurchaseProductRoute() {
+  const { productId } = useParams();
+
+  return (
+    <PurchaseProduct productId={productId} />  // Pass productId to PurchaseProduct component
   );
 }
 

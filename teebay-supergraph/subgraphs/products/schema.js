@@ -1,4 +1,3 @@
-// /products/schema.js
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
@@ -7,6 +6,7 @@ const typeDefs = gql`
     title: String!
     description: String!
     price: Float!
+    rentPrice: Float  # New field for rental price, allowing null values
     userId: ID!
     createdAt: String!
     categories: [Category!]!
@@ -29,6 +29,7 @@ const typeDefs = gql`
       title: String!,
       description: String!,
       price: Float!,
+      rentPrice: Float,  # Optional rental price field for adding a product
       userId: ID!,
       categoryIds: [Int!]!
     ): Product!
@@ -38,9 +39,9 @@ const typeDefs = gql`
       title: String,
       description: String,
       price: Float,
+      rentPrice: Float,  # Optional rental price field for editing a product
       categoryIds: [Int!]
     ): Product!  # Returns the updated product
-
 
     deleteProduct(id: ID!): Boolean!
   }

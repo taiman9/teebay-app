@@ -1,4 +1,3 @@
-// src/components/ProductsList.js
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_PRODUCTS } from '../mutations';  // Import the query to fetch products
@@ -46,6 +45,9 @@ function ProductsList({ userId }) {  // Accept userId as a prop
             <h3>{product.title}</h3>
             <p><strong>Description:</strong> {product.description}</p>
             <p><strong>Price:</strong> ${product.price}</p>
+            {product.rentPrice !== null && (  // Display rent price only if it's not null
+              <p><strong>Rent/Day:</strong> ${product.rentPrice}</p>
+            )}
             <p><strong>Categories:</strong> {product.categories.map(category => category.name).join(', ')}</p>
             <p><strong>Date Posted:</strong> {formatDate(product.createdAt)}</p>  {/* Display the formatted date */}
             <div className="product-actions">

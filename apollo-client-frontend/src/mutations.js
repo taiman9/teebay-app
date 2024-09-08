@@ -40,14 +40,16 @@ export const ADD_PRODUCT = gql`
   mutation AddProduct(
     $title: String!, 
     $description: String!, 
-    $price: Float!, 
+    $price: Float!,
+    $rentPrice: Float, 
     $userId: ID!, 
     $categoryIds: [Int!]!
   ) {
     addProduct(
       title: $title, 
       description: $description, 
-      price: $price, 
+      price: $price,
+      rentPrice: $rentPrice, 
       userId: $userId, 
       categoryIds: $categoryIds
     ) {
@@ -55,6 +57,7 @@ export const ADD_PRODUCT = gql`
       title
       description
       price
+      rentPrice
       userId
       categories {
         id
@@ -81,6 +84,7 @@ export const GET_ALL_PRODUCTS = gql`
       title
       description
       price
+      rentPrice
       userId
       createdAt
       categories {
@@ -99,6 +103,7 @@ export const GET_PRODUCT_BY_ID = gql`
       title
       description
       price
+      rentPrice
       userId
       categories {
         id
@@ -115,6 +120,7 @@ export const BROWSE_PRODUCTS = gql`
       title
       description
       price
+      rentPrice
       categories {
         id
         name
@@ -131,6 +137,7 @@ export const EDIT_PRODUCT = gql`
     $title: String,
     $description: String,
     $price: Float,
+    $rentPrice: Float,
     $categoryIds: [Int!]
   ) {
     editProduct(
@@ -138,6 +145,7 @@ export const EDIT_PRODUCT = gql`
       title: $title,
       description: $description,
       price: $price,
+      rentPrice: $rentPrice,
       categoryIds: $categoryIds
     ) {
       id

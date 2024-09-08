@@ -8,6 +8,7 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [rentPrice, setRentPrice] = useState('');  // New state for rentPrice
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
 
@@ -34,10 +35,11 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
   // Update state when product data is fetched
   useEffect(() => {
     if (productData && productData.product) {
-      const { title, description, price, categories } = productData.product;
+      const { title, description, price, rentPrice, categories } = productData.product;  // Include rentPrice
       setTitle(title);
       setDescription(description);
       setPrice(price);
+      setRentPrice(rentPrice !== null ? rentPrice : '');  // Handle null rentPrice by setting an empty string
       setSelectedCategories(
         categories.map((category) => ({ value: category.id.toString(), label: category.name }))
       );  // Use objects for React Select
@@ -66,6 +68,7 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
         title,
         description,
         price: parseFloat(price),
+        rentPrice: rentPrice ? parseFloat(rentPrice) : null,  // Allow null for rentPrice
         categoryIds,  // Send as an array of integers
       },
     });
@@ -119,6 +122,18 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
               step="0.01"
               required
               min="0"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="rentPrice">Rent Price (optional)</label>
+            <input
+              type="number"
+              id="rentPrice"
+              value={rentPrice}
+              onChange={(e) => setRentPrice(e.target.value)}
+              step="0.01"
+              min="0"
+              placeholder="Leave empty if not applicable"
             />
           </div>
           <div className="form-group">

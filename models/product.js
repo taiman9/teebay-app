@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    rentPrice: {
+      type: DataTypes.FLOAT,  // Set the type to FLOAT
+      allowNull: true,  // Allow null values
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,

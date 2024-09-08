@@ -31,6 +31,9 @@ function Login() {
 
   return (
     <div className="login-container">
+      {/* Link to go back to the homepage */}
+      <a href="/" className="home-link">Homepage</a>
+
       <form className="login-box" onSubmit={handleSubmit}>
         <h2>SIGN IN</h2>
         {error && <p className="error-message">{error.message}</p>}
