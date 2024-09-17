@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';  // Import user context
 import './Login.css'; // Import CSS for styling
-import { LOGIN_USER } from '../mutations';
+import { LOGIN_USER } from '../mutation_user';
 
 function Login() {
   const [email, setEmail] = useState('');

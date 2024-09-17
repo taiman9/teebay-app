@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { GET_ALL_CATEGORIES, ADD_PRODUCT } from '../mutations';
+import { GET_ALL_CATEGORIES, ADD_PRODUCT } from '../mutation_product';
 import './AddProduct.css';  // Import the CSS file for styling
 
 // AddProduct component

@@ -8,6 +8,8 @@ const typeDefs = gql`
     price: Float!
     rentPrice: Float  # New field for rental price, allowing null values
     userId: ID!
+    buyerId: ID  # New field for the buyer ID, allowing null values
+    buyDate: String  # New field for the date the product was bought, allowing null values
     createdAt: String!
     categories: [Category!]!
   }
@@ -44,6 +46,13 @@ const typeDefs = gql`
     ): Product!  # Returns the updated product
 
     deleteProduct(id: ID!): Boolean!
+
+    # Mutation to update the buyerId and buyDate fields of a product
+    updateProductBuyer(
+      id: ID!,  # Product ID to update
+      buyerId: ID!,  # Buyer ID to set
+      buyDate: String!  # Date when the product was bought
+    ): Product!  # Returns the updated product
   }
 `;
 

@@ -1,39 +1,4 @@
-// src/mutations.js
 import { gql } from '@apollo/client';
-
-// GraphQL mutation to register the user
-export const REGISTER_USER = gql`
-  mutation RegisterUser(
-    $email: String!,
-    $password: String!,
-    $firstName: String!,
-    $lastName: String!,
-    $address: String!,
-    $phoneNumber: String!
-  ) {
-    register(
-      email: $email,
-      password: $password,
-      firstName: $firstName,
-      lastName: $lastName,
-      address: $address,
-      phoneNumber: $phoneNumber
-    ) {
-      id
-      email
-    }
-  }
-`;
-
-// GraphQL mutation to login the user
-export const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`;
 
 // GraphQL mutation to add a new product
 export const ADD_PRODUCT = gql`
@@ -91,11 +56,13 @@ export const GET_ALL_PRODUCTS = gql`
         id
         name
       }
+      buyerId  # Fetch the buyerId field
+      buyDate  # Fetch the buyDate field
     }
   }
 `;
 
-// Query to get a product by ID
+// Updated query to get a product by ID
 export const GET_PRODUCT_BY_ID = gql`
   query GetProductById($id: ID!) {
     product(id: $id) {
@@ -109,6 +76,9 @@ export const GET_PRODUCT_BY_ID = gql`
         id
         name
       }
+      buyerId  # Fetch the buyerId field
+      buyDate  # Fetch the buyDate field
+      createdAt
     }
   }
 `;
@@ -125,6 +95,8 @@ export const BROWSE_PRODUCTS = gql`
         id
         name
       }
+      buyerId  # Fetch the buyerId field
+      buyDate  # Fetch the buyDate field
       createdAt
     }
   }
@@ -160,10 +132,20 @@ export const EDIT_PRODUCT = gql`
   }
 `;
 
-
 // Mutation to delete a product
 export const DELETE_PRODUCT = gql`
   mutation DeleteProduct($id: ID!) {
     deleteProduct(id: $id)
+  }
+`;
+
+// Mutation to update the buyerId and buyDate in the Product table
+export const UPDATE_PRODUCT_BUYER = gql`
+  mutation UpdateProductBuyer($id: ID!, $buyerId: ID!, $buyDate: String!) {
+    updateProductBuyer(id: $id, buyerId: $buyerId, buyDate: $buyDate) {
+      id
+      buyerId
+      buyDate
+    }
   }
 `;

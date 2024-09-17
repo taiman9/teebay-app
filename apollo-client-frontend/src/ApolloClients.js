@@ -1,5 +1,4 @@
-// src/ApolloClient.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 
@@ -18,16 +17,35 @@ const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
 
-    // If the operation is a query or mutation and is related to Users, route to usersLink
-    if (
-      definition.kind === 'OperationDefinition' &&
-      (definition.name?.value.toLowerCase().includes('user') ||  // Match any operation containing 'user'
-       definition.name?.value.toLowerCase().includes('login') ||  // Example: Match specific user-related operations
-       definition.name?.value.toLowerCase().includes('register'))
-    ) {
-      return true;  // Direct to usersLink
+    // Check if the operation is defined and has a name
+    if (definition.kind === 'OperationDefinition' && definition.name?.value) {
+      // Extract the operation name to determine its origin
+      const operationName = definition.name.value.toLowerCase();
+
+      // If the operation is from mutation_user.js, route to usersLink
+      if (
+        operationName.includes('register') ||  // Register-related operations
+        operationName.includes('login') ||  // Login-related operations
+        operationName.includes('user')  // User-related queries/mutations
+      ) {
+        return true;  // Direct to usersLink
+      }
+
+      // If the operation is from mutation_product.js, route to productsLink
+      if (
+        operationName.includes('addproduct') ||  // Add Product mutation
+        operationName.includes('deleteproduct') ||  // Delete Product mutation
+        operationName.includes('editproduct') ||  // Edit Product mutation
+        operationName.includes('getproductbyid') ||  // Get Product by ID query
+        operationName.includes('browseproducts') || // Browse Products query
+        operationName.includes('createboughtitem')  // createBoughtItem mutation from users subgraph
+      ) {
+        return false;  // Direct to productsLink
+      }
     }
-    return false;  // Otherwise, direct to productsLink
+
+    // Default to productsLink
+    return false;
   },
   usersLink,  // Send operations to Users subgraph if they match the condition
   productsLink  // Otherwise, send operations to Products subgraph
@@ -39,7 +57,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),  // Use in-memory caching
 });
 
-// Apollo Provider Component
+// Apollo Provider Component with cache clearing
 export const MultiApolloProvider = ({ children }) => {
+  useEffect(() => {
+    // Clear Apollo Client cache if needed (you can trigger this manually or conditionally)
+    client.clearStore();
+  }, []);  // Empty dependency array to run only once on mount
+
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

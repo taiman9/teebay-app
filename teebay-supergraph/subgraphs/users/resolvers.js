@@ -1,11 +1,19 @@
+// users/resolvers.js
+
 import models from '../../../models/index.js';
-const { User } = models;
+const { User } = models;  // Import Bought model
 
 // Resolvers for handling GraphQL operations
 const resolvers = {
   Query: {
+    // Fetch all users
     users: async () => await User.findAll(),
+    
+    // Fetch a single user by ID
     user: async (_, { id }) => await User.findByPk(id),
+    
+    //boughtItems: async (_, { buyerId }) => await Bought.findAll({ where: { buyerId } }),
+    //soldItems: async (_, { sellerId }) => await Bought.findAll({ where: { sellerId } }),
   },
   Mutation: {
     // Register a new user
@@ -35,8 +43,8 @@ const resolvers = {
       if (!user) {
         throw new Error('User not found');
       }
-      const validpassword = await password === user.password;
-      if (!validpassword) {
+      const validPassword = password === user.password;
+      if (!validPassword) {
         throw new Error('Invalid password');
       }
       

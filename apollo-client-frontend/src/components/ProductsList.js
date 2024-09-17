@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../mutations';  // Import the query to fetch products
+import { GET_ALL_PRODUCTS } from '../mutation_product';  // Import the query to fetch products
 import { useNavigate } from 'react-router-dom';  // Import Link and useNavigate for navigation
 import DeleteProduct from './DeleteProduct';  // Import DeleteProduct component
 import './ProductsList.css';  // Import CSS for styling
@@ -34,13 +34,18 @@ function ProductsList({ userId }) {  // Accept userId as a prop
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error loading products: {error.message}</p>;
 
+  // Filter products where buyerId and buyDate are null
+  const filteredProducts = data.products.filter(
+    (product) => product.buyerId === null && product.buyDate === null
+  );
+
   return (
     <div className="products-list">
       <h2>My Products</h2>
 
       {/* Render Products */}
       <div className="products-container">
-        {data.products.map((product) => (
+        {filteredProducts.map((product) => (  // Use filteredProducts here
           <div key={product.id} className="product-card">
             <h3>{product.title}</h3>
             <p><strong>Description:</strong> {product.description}</p>

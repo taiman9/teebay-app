@@ -1,11 +1,11 @@
-// src/Dashboard.js
 import React from 'react';
-import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate, useParams, useLocation } from 'react-router-dom';
 import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
 import BrowseProducts from './components/BrowseProducts';  // Import BrowseProducts component
 import PurchaseProduct from './components/PurchaseProduct';  // Import PurchaseProduct component
+import BuyProduct from './components/BuyProduct';  // Import BuyProduct component
 import { useUser } from './context/UserContext';
 import './Dashboard.css';  // Import the CSS file for styling
 
@@ -36,11 +36,12 @@ function Dashboard() {
       <div>
         <h2>Manage Products</h2>
         
-        {/* Links for Add Product, View Products, and Browse Products side by side */}
+        {/* Links for Add Product, View Products, Browse Products, and Purchase Product */}
         <div className="dashboard-links">
           <Link to="/dashboard/add-product" className="link-button">Add Product</Link>
           <Link to="/dashboard/products" className="link-button">View My Products</Link>
-          <Link to="/dashboard/browse-products" className="link-button">Browse Products</Link> {/* New link for Browse Products */}
+          <Link to="/dashboard/browse-products" className="link-button">Browse Products</Link>
+          {/* Add more links if needed */}
         </div>
 
         {/* Define Routes within the Dashboard component */}
@@ -67,6 +68,12 @@ function Dashboard() {
           <Route
             path="purchase-product/:productId"
             element={<PurchaseProductRoute />}
+          />
+
+          {/* Route for buying a product */}
+          <Route
+            path="buy-product"
+            element={<BuyProductRoute />}
           />
 
           {/* Route for editing a product by productId */}
@@ -101,9 +108,28 @@ function EditProductRoute() {
 // Wrapper component to handle route params and pass them to PurchaseProduct
 function PurchaseProductRoute() {
   const { productId } = useParams();
+  const { user } = useUser();  // Access user context to get the user ID
+
+  if (!user) {
+    return <p>Please log in to purchase products.</p>;  // Ensure user is logged in
+  }
 
   return (
-    <PurchaseProduct productId={productId} />  // Pass productId to PurchaseProduct component
+    <PurchaseProduct userId={user.id} productId={productId} />  // Pass userId and productId to PurchaseProduct component
+  );
+}
+
+// Wrapper component to handle state passed from PurchaseProduct to BuyProduct
+function BuyProductRoute() {
+  const location = useLocation();  // Use useLocation to access navigation state
+  const { userId, productId } = location.state || {};  // Destructure userId and productId from state
+
+  if (!userId || !productId) {
+    return <p>Invalid product or user information.</p>;  // Ensure valid data is passed
+  }
+
+  return (
+    <BuyProduct userId={userId} productId={productId} />  // Pass userId and productId to BuyProduct component
   );
 }
 

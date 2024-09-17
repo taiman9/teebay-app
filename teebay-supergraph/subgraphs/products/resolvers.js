@@ -1,5 +1,5 @@
 import models from '../../../models/index.js';  // Import User model to check user existence
-const { Product, Category, User } = models;
+const { Product, Category, User, Sequelize } = models;  // Include Sequelize for Op functions
 
 const resolvers = {
   Query: {
@@ -15,6 +15,7 @@ const resolvers = {
         categories: product.categories || [],  // Return an empty array if categories is null
       }));
     },
+
     // Fetch a single product by ID
     product: async (_, { id }) => {
       const product = await Product.findByPk(id, {
@@ -25,16 +26,19 @@ const resolvers = {
       }
       return product;
     },
+
     // Fetch all categories
     categories: async () => await Category.findAll(),
 
-    // New resolver to fetch all products not owned by the given userId
+    // Updated resolver to fetch all products not owned by the given userId and where buyerId and buyDate are null
     browseProducts: async (_, { userId }) => {
       try {
-        // Fetch products where userId is not equal to the given userId
+        // Fetch products where userId is not equal to the given userId and buyerId, buyDate are null
         const products = await Product.findAll({
           where: {
-            userId: { [models.Sequelize.Op.ne]: userId }  // Using Sequelize.Op.ne for "not equal" condition
+            userId: { [Sequelize.Op.ne]: userId },  // Using Sequelize.Op.ne for "not equal" condition
+            buyerId: { [Sequelize.Op.eq]: null },  // Fetch products where buyerId is null
+            buyDate: { [Sequelize.Op.eq]: null }   // Fetch products where buyDate is null
           },
           include: [{ model: Category, as: 'categories' }],
         });
@@ -77,6 +81,7 @@ const resolvers = {
 
       return newProduct;
     },
+
     // Edit an existing product
     editProduct: async (_, { id, title, description, price, rentPrice, categoryIds }) => {
       const product = await Product.findByPk(id);
@@ -108,38 +113,54 @@ const resolvers = {
 
       return product;
     },
-    
-   // Delete an existing product
-   deleteProduct: async (_, { id }) => {
-    try {
-      const product = await Product.findByPk(id);  // Find the product by ID
+
+    // Mutation to update the buyerId and buyDate fields of a product
+    updateProductBuyer: async (_, { id, buyerId, buyDate }) => {
+      const product = await Product.findByPk(id);
       if (!product) {
-        console.error(`Product with ID ${id} not found.`);
-        return false;  // Return false if the product does not exist
+        throw new Error('Product not found');
       }
 
-      // Ensure product's userId references a valid user
-      const userExists = await User.findByPk(product.userId);
-      if (!userExists) {
-        console.error(`User with ID ${product.userId} not found.`);
-        return false;  // Return false if the user does not exist
-      }
+      // Update the buyerId and buyDate fields
+      product.buyerId = buyerId;
+      product.buyDate = buyDate;
 
-      // Remove associations with categories before deletion
-      await product.setCategories([]);  // Clear associated categories
+      await product.save();  // Save the updated product
 
-      // Delete product directly by ID
-      await Product.destroy({
-        where: {
-          id: id,  // Use the product ID to specify which product to delete
-        },
-      });
+      return product;  // Return the updated product
+    },
+    
+    // Delete an existing product
+    deleteProduct: async (_, { id }) => {
+      try {
+        const product = await Product.findByPk(id);  // Find the product by ID
+        if (!product) {
+          console.error(`Product with ID ${id} not found.`);
+          return false;  // Return false if the product does not exist
+        }
 
-      console.log(`Product with ID ${id} successfully deleted.`);
-      return true;  // Return true if the deletion was successful
-    } catch (error) {
-      console.error('Error deleting product:', error);
-      return false;  // Return false if an error occurred
+        // Ensure product's userId references a valid user
+        const userExists = await User.findByPk(product.userId);
+        if (!userExists) {
+          console.error(`User with ID ${product.userId} not found.`);
+          return false;  // Return false if the user does not exist
+        }
+
+        // Remove associations with categories before deletion
+        await product.setCategories([]);  // Clear associated categories
+
+        // Delete product directly by ID
+        await Product.destroy({
+          where: {
+            id: id,  // Use the product ID to specify which product to delete
+          },
+        });
+
+        console.log(`Product with ID ${id} successfully deleted.`);
+        return true;  // Return true if the deletion was successful
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        return false;  // Return false if an error occurred
       }
     },
   },

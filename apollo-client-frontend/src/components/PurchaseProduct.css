@@ -1,0 +1,61 @@
+.purchase-product-container {
+    max-width: 600px; /* Maximum width for the container */
+    margin: 20px auto; /* Center the container with some margin */
+    padding: 20px; /* Add padding inside the container */
+    background-color: #f9f9f9; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: left; /* Left-align the text */
+  }
+  
+  .purchase-product-container h2 {
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center the heading */
+    font-size: 24px; /* Larger font size for the heading */
+    color: #333; /* Darker text color */
+  }
+  
+  .purchase-product-container p {
+    margin-bottom: 15px; /* Space below each paragraph */
+    font-size: 16px; /* Standard font size for details */
+    color: #555; /* Slightly lighter text color */
+  }
+  
+  .purchase-product-container p strong {
+    color: #333; /* Darker text color for emphasis */
+  }
+  
+  .product-actions {
+    display: flex; /* Use flexbox for button layout */
+    justify-content: space-between; /* Space out buttons evenly */
+    margin-top: 20px; /* Space above the buttons */
+  }
+  
+  .btn {
+    padding: 10px 20px; /* Padding inside the buttons */
+    color: white; /* White text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button text */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .btn:disabled {
+    background-color: #ccc; /* Gray color for disabled state */
+    cursor: not-allowed; /* Not allowed cursor for disabled state */
+  }
+  
+  /* Specific styles for Buy Now button */
+  .btn-buy {
+    background-color: #28a745; /* Green background color */
+  }
+  
+  .btn-buy:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  

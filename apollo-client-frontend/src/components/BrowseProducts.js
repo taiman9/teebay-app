@@ -1,7 +1,8 @@
+// src/components/BrowseProducts.js
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
-import { BROWSE_PRODUCTS } from '../mutations';  // Import the query to fetch products
+import { BROWSE_PRODUCTS } from '../mutation_product';  // Import the query to fetch products
 import './BrowseProducts.css';  // Import CSS for styling
 
 // Helper function to format date
@@ -33,13 +34,13 @@ function BrowseProducts({ userId }) {
   if (error) return <p>Error loading products: {error.message}</p>;
 
   // Handle Product Card Click
-  const handleProductClick = (productId) => {
-    navigate(`/dashboard/purchase-product/${productId}`);  // Navigate to the purchase product page with productId
+  const handleProductClick = (product) => {
+    navigate(`/dashboard/purchase-product/${product.id}`);  // Navigate to the purchase product page with productId
   };
 
   return (
     <div className="browse-products">
-      <h2>Browse Products</h2>
+      <h2>Available Products</h2>
 
       {/* Render Products */}
       <div className="products-container">
@@ -47,7 +48,7 @@ function BrowseProducts({ userId }) {
           <div 
             key={product.id} 
             className="product-card" 
-            onClick={() => handleProductClick(product.id)}  // Navigate to purchase page on click
+            onClick={() => handleProductClick(product)}  // Navigate to purchase page on click
             style={{ cursor: 'pointer' }}  // Add cursor pointer for better UX
           >
             <h3>{product.title}</h3>
