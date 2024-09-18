@@ -1,35 +1,34 @@
-/* src/Dashboard.css */
-
 /* Container for the entire dashboard */
 .dashboard-container {
-    max-width: 1400px;  /* Increase max-width for a larger container */
-    margin: 50px auto;  /* Center the container with vertical margin */
-    padding: 40px;  /* Increase padding for more space inside the container */
+    max-width: 1800px;
+    margin: 50px auto;
+    padding: 40px;
     background-color: #f4f4f4;
-    border-radius: 12px;  /* Increase border radius for a smoother curve */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Slightly deeper shadow */
-    display: flex;  /* Flexbox for centering */
-    flex-direction: column;  /* Stack elements vertically */
-    align-items: center;  /* Center align items horizontally */
-    justify-content: flex-start;  /* Align items to the top */
-    position: relative;  /* For absolute positioning of logout button */
-    min-height: 80vh;  /* Minimum height to increase vertical length */
-    height: auto;  /* Let the height adjust based on content */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    min-height: 80vh;
+    height: auto;
 }
 
 /* Header styling */
 .dashboard-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center the header content */
     align-items: center;
-    width: 100%;  /* Full width for header */
-    margin-bottom: 30px;  /* Increase bottom margin for spacing */
-    padding: 0 20px;  /* Add padding to match container */
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0 20px;
+    position: relative; /* Make relative positioning for Logout button */
 }
 
 /* Dashboard title styling */
 .dashboard-title {
-    font-size: 32px;  /* Increase font size for the title */
+    font-size: 32px;
     color: #151f77;
     margin: 0;
 }
@@ -39,14 +38,14 @@
     background-color: #e74c3c;
     color: white;
     border: none;
-    padding: 10px 20px;  /* Increase padding */
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;  /* Increase font size */
+    font-size: 16px;
     position: absolute;
-    top: 30px;  /* Adjust positioning */
-    right: 30px;  /* Adjust positioning */
-    width: 120px;  /* Increase button width */
+    top: 0; /* Align at the top */
+    right: 20px; /* Keep it aligned with padding */
+    width: 120px;
     transition: background-color 0.3s ease;
 }
 
@@ -54,67 +53,97 @@
     background-color: #c0392b;
 }
 
-/* Section container styling */
-.dashboard-section {
+/* Manage Products Section styling - Centered at the top */
+.manage-products-section {
     background-color: #ffffff;
-    border-radius: 10px;  /* Slightly increase border radius */
     padding: 20px;
-    margin-bottom: 25px;  /* Increase margin for better spacing */
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;  /* Make sections full width */
-    max-width: 800px;  /* Limit maximum width for better readability */
-}
-
-/* Dashboard section headings */
-.dashboard-section h2 {
-    margin-top: 0;
-    font-size: 22px;  /* Increase font size */
-    color: #444;
-}
-
-/* Paragraph styling within sections */
-.dashboard-section p {
-    margin: 0;
-    font-size: 16px;
-    color: #555;
-}
-
-/* Link styling */
-.dashboard-section a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.dashboard-section a:hover {
-    text-decoration: underline;
-}
-
-/* Container for the links to display them side by side */
-.dashboard-links {
+    width: 50%; /* Take up 50% of the available width */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
     display: flex;
-    justify-content: center;  /* Center the links */
-    align-items: center;  /* Center vertically */
-    gap: 40px;  /* Increase space between the links */
-    margin-bottom: 30px;  /* Increase space below the links */
-    width: 100%;  /* Ensure it takes full width */
-    padding: 30px 0;  /* Add more padding for spacing */
+    flex-direction: column;
+    align-items: center; /* Center the content */
+    justify-content: center; /* Vertically center the content */
 }
 
-/* Style for the link buttons */
-.link-button {
-    display: inline-block;
-    padding: 12px 25px;  /* Increase padding */
-    background-color: #3498db;
-    color: white;
+/* Wrapper to align My Information section separately */
+.dashboard-sections-wrapper {
+    display: flex;
+    justify-content: flex-start; /* Align My Information to the left */
+    width: 100%;
+    max-width: 1600px; /* Adjusted width to make room */
+    gap: 30px; /* Space between the sections */
+    margin-bottom: 30px;
+    flex-direction: row; /* Place sections horizontally */
+    align-items: flex-start;
+}
+
+/* My Information Section styling */
+.my-information-section {
+    background-color: #fefefe;
+    border: 1px solid #d3d3d3;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 20%; /* Adjusted width */
+    border-radius: 10px;
+    align-self: flex-start; /* Align My Information to the left */
+    display: flex;
+    flex-direction: column; /* Ensure the content flows vertically */
+    align-items: center; /* Align content to the left */
+}
+
+/* My Information button styling */
+.my-info-button {
+    background-color: #4CAF50;
     border: none;
+    color: white;
+    padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
+    font-size: 16px;
+    width: 60%;
     transition: background-color 0.3s ease;
-    font-size: 18px;  /* Increase font size for better visibility */
 }
 
-.link-button:hover {
+.my-info-button:hover {
+    background-color: #45a049;
+}
+
+/* Product button styling */
+.product-button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.product-button:hover {
     background-color: #2980b9;
+}
+
+/* Vertical layout for the My Information links */
+.dashboard-links-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    width: 100%; /* Make the container full width */
+    align-items: center; /* Align buttons to the left */
+}
+
+/* Container for the Manage Products links */
+.dashboard-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+    width: 100%;
+    padding: 30px 0;
 }

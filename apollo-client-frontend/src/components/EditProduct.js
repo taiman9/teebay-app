@@ -11,6 +11,7 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
   const [rentPrice, setRentPrice] = useState('');  // New state for rentPrice
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');  // New state for success message
 
   // Fetch product details to edit
   const { loading: productLoading, data: productData, error: productError } = useQuery(GET_PRODUCT_BY_ID, {
@@ -24,8 +25,13 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
   // Update product mutation
   const [editProduct, { loading: editProductLoading }] = useMutation(EDIT_PRODUCT, {
     onCompleted: (data) => {
-      onProductUpdated();  // Notify parent component about the update
-      onClose();  // Close modal after update
+      setSuccessMessage('Product has been edited');  // Set success message on successful update
+      
+      setTimeout(() => {
+        setSuccessMessage('');  // Clear success message after 2 seconds
+        onProductUpdated();  // Notify parent component about the update after delay
+        onClose();  // Close modal after 2-second delay
+      }, 2000);  // Delay of 2 seconds
     },
     onError: (error) => {
       setError(error.message);  // Show error message on update failure
@@ -58,9 +64,6 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
     // Convert selected categories back to an array of integers
     const categoryIds = selectedCategories.map((category) => parseInt(category.value, 10));
 
-    // Check if categoryIds array is correctly formed
-    console.log('Updated category IDs:', categoryIds);
-
     // Execute the mutation to update the product
     editProduct({
       variables: {
@@ -92,6 +95,7 @@ function EditProduct({ productId, onClose, onProductUpdated }) {
         <button className="close-btn small-close-btn" onClick={onClose}>&times;</button>
         <h2>Edit Product</h2>
         {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}  {/* Display success message */}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>

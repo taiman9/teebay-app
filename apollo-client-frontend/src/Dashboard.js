@@ -3,11 +3,13 @@ import { Link, Route, Routes, useNavigate, useParams, useLocation } from 'react-
 import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
-import BrowseProducts from './components/BrowseProducts';  // Import BrowseProducts component
-import PurchaseProduct from './components/PurchaseProduct';  // Import PurchaseProduct component
-import BuyProduct from './components/BuyProduct';  // Import BuyProduct component
+import BrowseProducts from './components/BrowseProducts';
+import PurchaseProduct from './components/PurchaseProduct';
+import BuyProduct from './components/BuyProduct';
+import Transactions from './components/Transactions';
+import UserInfo from './components/UserInfo';
 import { useUser } from './context/UserContext';
-import './Dashboard.css';  // Import the CSS file for styling
+import './Dashboard.css';
 
 function Dashboard() {
   const { user, logout } = useUser();
@@ -25,64 +27,47 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      {/* Dashboard Header */}
       <div className="dashboard-header">
         <h1 className="dashboard-title">Your Dashboard</h1>
-        {/* Logout Button */}
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>
       </div>
-      
-      <div>
-        <h2>Manage Products</h2>
-        
-        {/* Links for Add Product, View Products, Browse Products, and Purchase Product */}
-        <div className="dashboard-links">
-          <Link to="/dashboard/add-product" className="link-button">Add Product</Link>
-          <Link to="/dashboard/products" className="link-button">View My Products</Link>
-          <Link to="/dashboard/browse-products" className="link-button">Browse Products</Link>
-          {/* Add more links if needed */}
+
+      {/* Wrapper for My Information and Manage Products */}
+      <div className="dashboard-sections-wrapper">
+        {/* My Information Section */}
+        <div className="dashboard-section my-information-section">
+          <h2>My Information</h2>
+          <div className="dashboard-links-vertical">
+            <Link to="/dashboard/transactions" className="link-button my-info-button">View Transactions</Link>
+            <Link to="/dashboard/personal-info" className="link-button my-info-button">Personal Information</Link>
+          </div>
         </div>
 
-        {/* Define Routes within the Dashboard component */}
-        <Routes>
-          {/* Route for adding a new product */}
-          <Route
-            path="add-product"
-            element={<AddProduct userId={user.id} onProductAdded={() => console.log('Product added!')} />} 
-          />
-          
-          {/* Route for listing user's products */}
-          <Route
-            path="products"
-            element={<ProductsList userId={user.id} />}
-          />
-          
-          {/* Route for browsing products not owned by the user */}
-          <Route
-            path="browse-products"
-            element={<BrowseProducts userId={user.id} />}  // Pass userId to BrowseProducts component
-          />
-
-          {/* Route for purchasing a product */}
-          <Route
-            path="purchase-product/:productId"
-            element={<PurchaseProductRoute />}
-          />
-
-          {/* Route for buying a product */}
-          <Route
-            path="buy-product"
-            element={<BuyProductRoute />}
-          />
-
-          {/* Route for editing a product by productId */}
-          <Route
-            path="edit-product/:productId"
-            element={<EditProductRoute />}
-          />
-        </Routes>
+        {/* Manage Products Section */}
+        <div className="dashboard-section manage-products-section">
+          <h2>Manage Products</h2>
+          <div className="dashboard-links">
+            <Link to="/dashboard/add-product" className="link-button product-button">Add Product</Link>
+            <Link to="/dashboard/products" className="link-button product-button">View My Products</Link>
+            <Link to="/dashboard/browse-products" className="link-button product-button">Browse Products</Link>
+          </div>
+        </div>
       </div>
+
+      {/* Define Routes within the Dashboard component */}
+      <Routes>
+        <Route path="add-product" element={<AddProduct userId={user.id} onProductAdded={() => console.log('Product added!')} />} />
+        <Route path="products" element={<ProductsList userId={user.id} />} />
+        <Route path="browse-products" element={<BrowseProducts userId={user.id} />} />
+        <Route path="purchase-product/:productId" element={<PurchaseProductRoute />} />
+        <Route path="buy-product" element={<BuyProductRoute />} />
+        <Route path="edit-product/:productId" element={<EditProductRoute />} />
+        <Route path="transactions" element={<Transactions userId={user.id} />} />
+        <Route path="personal-info" element={<UserInfo userId={user.id} />} />
+      </Routes>
     </div>
   );
 }
@@ -108,28 +93,28 @@ function EditProductRoute() {
 // Wrapper component to handle route params and pass them to PurchaseProduct
 function PurchaseProductRoute() {
   const { productId } = useParams();
-  const { user } = useUser();  // Access user context to get the user ID
+  const { user } = useUser();
 
   if (!user) {
-    return <p>Please log in to purchase products.</p>;  // Ensure user is logged in
+    return <p>Please log in to purchase products.</p>;
   }
 
   return (
-    <PurchaseProduct userId={user.id} productId={productId} />  // Pass userId and productId to PurchaseProduct component
+    <PurchaseProduct userId={user.id} productId={productId} />
   );
 }
 
 // Wrapper component to handle state passed from PurchaseProduct to BuyProduct
 function BuyProductRoute() {
-  const location = useLocation();  // Use useLocation to access navigation state
-  const { userId, productId } = location.state || {};  // Destructure userId and productId from state
+  const location = useLocation();
+  const { userId, productId } = location.state || {};
 
   if (!userId || !productId) {
-    return <p>Invalid product or user information.</p>;  // Ensure valid data is passed
+    return <p>Invalid product or user information.</p>;
   }
 
   return (
-    <BuyProduct userId={userId} productId={productId} />  // Pass userId and productId to BuyProduct component
+    <BuyProduct userId={userId} productId={productId} />
   );
 }
 
