@@ -35,37 +35,17 @@ export const LOGIN_USER = gql`
   }
 `;
 
-// Mutation to buy a product and create an entry in the Bought table
-export const CREATE_BOUGHT_ITEM = gql`
-  mutation CreateBoughtItem(
-    $buyerId: ID!,
-    $sellerId: ID!,
-    $productId: ID!,
-    $title: String!,
-    $description: String,
-    $price: Float!,
-    $categories: [String!]!,  # Updated to include categories field
-    $boughtAt: String!,
-    $postedAt: String
-  ) {
-    createBoughtItem(
-      buyerId: $buyerId,
-      sellerId: $sellerId,
-      productId: $productId,
-      title: $title,
-      description: $description,
-      price: $price,
-      categories: $categories,  # Updated to include categories field
-      boughtAt: $boughtAt,
-      postedAt: $postedAt
-    ) {
+export const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       id
-      title
-      price
-      categories  # Return the categories field in the response
-      boughtAt
-      postedAt
+      firstName
+      lastName
+      email
+      address
+      phoneNumber
     }
   }
 `;
+
 

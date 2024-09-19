@@ -99,10 +99,10 @@
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 8px 15px;
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     width: 60%;
     transition: background-color 0.3s ease;
 }

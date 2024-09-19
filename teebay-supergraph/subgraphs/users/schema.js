@@ -16,8 +16,7 @@ const typeDefs = gql`
   type Query {
     users: [User!]!
     user(id: ID!): User
-    boughtItems(buyerId: ID!): [Bought!]!  # Query to fetch bought items for a user
-    soldItems(sellerId: ID!): [Bought!]!  # Query to fetch sold items for a user
+    getUser(id: ID!): User
   }
 
   type Mutation {

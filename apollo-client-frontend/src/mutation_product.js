@@ -149,3 +149,17 @@ export const UPDATE_PRODUCT_BUYER = gql`
     }
   }
 `;
+
+export const GET_TRANSACTION = gql`
+  query GetTransaction($userId: ID!, $transactionType: String!) {
+    getTransaction(userId: $userId, transactionType: $transactionType) {
+      id
+      title
+      description
+      price
+      userId
+      buyerId
+      createdAt
+    }
+  }
+`;

@@ -6,8 +6,6 @@ import EditProduct from './components/EditProduct';
 import BrowseProducts from './components/BrowseProducts';
 import PurchaseProduct from './components/PurchaseProduct';
 import BuyProduct from './components/BuyProduct';
-import Transactions from './components/Transactions';
-import UserInfo from './components/UserInfo';
 import { useUser } from './context/UserContext';
 import './Dashboard.css';
 
@@ -41,8 +39,9 @@ function Dashboard() {
         <div className="dashboard-section my-information-section">
           <h2>My Information</h2>
           <div className="dashboard-links-vertical">
-            <Link to="/dashboard/transactions" className="link-button my-info-button">View Transactions</Link>
-            <Link to="/dashboard/personal-info" className="link-button my-info-button">Personal Information</Link>
+            {/* Update the link to redirect to /transactions */}
+            <Link to="/transactions" className="link-button my-info-button">View Transactions</Link>
+            <Link to="/personal-info" className="link-button my-info-button">Personal Information</Link>
           </div>
         </div>
 
@@ -65,8 +64,6 @@ function Dashboard() {
         <Route path="purchase-product/:productId" element={<PurchaseProductRoute />} />
         <Route path="buy-product" element={<BuyProductRoute />} />
         <Route path="edit-product/:productId" element={<EditProductRoute />} />
-        <Route path="transactions" element={<Transactions userId={user.id} />} />
-        <Route path="personal-info" element={<UserInfo userId={user.id} />} />
       </Routes>
     </div>
   );

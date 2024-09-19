@@ -5,9 +5,12 @@ import { UserProvider } from './context/UserContext'; // Import user context pro
 import Login from './components/SignInComponent'; // Import SignInComponent
 import Register from './components/RegisterComponent';
 import Dashboard from './Dashboard'; // Assume Dashboard has AddProductComponent
+import Transactions from './components/Transactions';
+import UserInfo from './components/UserInfo';
 import './App.css'; // Import the CSS file for styling
 
 function App() {
+
   return (
     // Wrap the entire app with UserProvider
     <UserProvider>
@@ -34,6 +37,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard/*" element={<Dashboard />} /> {/* Show Dashboard after login */}
           {/* Add other routes as needed */}
+          <Route path="/transactions" element={<Transactions />} />  {/* Transactions page */}
+          <Route path="/personal-info" element={<UserInfo />} />
         </Routes>
       </Router>
     </UserProvider>

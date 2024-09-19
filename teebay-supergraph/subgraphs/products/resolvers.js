@@ -58,6 +58,29 @@ const resolvers = {
         return [];  // Return an empty array in case of an error
       }
     },
+
+    // Get products based on transaction type
+    getTransaction: async (_, { userId, transactionType }) => {
+      const whereClause = {};
+    
+      if (transactionType === 'bought') {
+        // For 'bought' products, match buyerId with userId
+        whereClause.buyerId = userId;
+      } else if (transactionType === 'sold') {
+        // For 'sold' products, match userId with userId and ensure buyerId and buyDate are not null
+        whereClause.userId = userId;
+        whereClause.buyerId = { [Sequelize.Op.ne]: null }; // Ensure buyerId is not null
+        whereClause.buyDate = { [Sequelize.Op.ne]: null }; // Ensure buyDate is not null
+      } else {
+        throw new Error('Invalid transaction type');
+      }
+    
+      const products = await Product.findAll({
+        where: whereClause,
+      });
+    
+      return products;
+    },    
   },
 
   Mutation: {

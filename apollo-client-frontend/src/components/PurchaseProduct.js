@@ -1,28 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { GET_PRODUCT_BY_ID } from '../mutation_product'; // Import query to fetch product by ID
+import { GET_PRODUCT_BY_ID } from '../mutation_product'; // Query to fetch product by ID
+import { GET_USER } from '../mutation_user'; // Query to fetch user by ID
 import './PurchaseProduct.css'; // Import CSS for styling
 
 function PurchaseProduct({ userId, productId }) {
   const navigate = useNavigate(); // Hook to navigate programmatically
   const [product, setProduct] = useState(null); // State to hold fetched product details
+  const [seller, setSeller] = useState(null); // State to hold fetched seller details
 
   // Fetch product details using product ID
-  const { loading, error, data } = useQuery(GET_PRODUCT_BY_ID, {
+  const { loading: productLoading, error: productError, data: productData } = useQuery(GET_PRODUCT_BY_ID, {
     variables: { id: productId },
     fetchPolicy: 'network-only', // Ensure fresh data is fetched from the server
   });
 
-  // Update state when data is loaded
+  // Fetch seller details using product's userId
+  const { loading: sellerLoading, error: sellerError, data: sellerData } = useQuery(GET_USER, {
+    variables: { id: product?.userId }, // Pass product's userId to fetch seller
+    skip: !product?.userId, // Skip query if product's userId is not available
+    fetchPolicy: 'network-only',
+  });
+
+  // Update product state when data is loaded
   useEffect(() => {
-    if (data && data.product) {
-      console.log('Product fetched:', data.product);  // Debugging: Log fetched product
-      setProduct(data.product); // Set the fetched product details in state
-    } else {
-      console.log('No product data available');  // Debugging: Log if no data is available
+    if (productData && productData.product) {
+      setProduct(productData.product); // Set the fetched product details in state
     }
-  }, [data]); // Dependency on data to ensure the state is updated correctly
+  }, [productData]);
+
+  // Update seller state when seller data is loaded
+  useEffect(() => {
+    if (sellerData && sellerData.getUser) {
+      setSeller(sellerData.getUser); // Set the fetched seller details in state
+    }
+  }, [sellerData]);
 
   // Handle Buy Product button click
   const handleBuyProduct = () => {
@@ -40,14 +53,21 @@ function PurchaseProduct({ userId, productId }) {
   };
 
   // Render loading, error, or no product found states
-  if (loading) return <p>Loading product details...</p>;
-  if (error) return <p>Error loading product: {error.message}</p>;
-
-  // Check if product is fetched successfully
+  if (productLoading) return <p>Loading product details...</p>;
+  if (productError) return <p>Error loading product: {productError.message}</p>;
   if (!product) return <p>No product found.</p>;
+
+  // Render loading or error for seller info
+  if (sellerLoading) return <p>Loading seller information...</p>;
+  if (sellerError) return <p>Error loading seller information: {sellerError.message}</p>;
 
   return (
     <div className="purchase-product-container">
+      {/* Return to Browse Products Button */}
+      <button onClick={() => navigate('/dashboard/browse-products')} className="return-to-browse-button">
+        Return to Browse
+      </button>
+
       <h2>Purchase Product</h2>
       <p>
         <strong>Title:</strong> {product.title}
@@ -63,6 +83,15 @@ function PurchaseProduct({ userId, productId }) {
           <strong>Rent Price per Day:</strong> ${product.rentPrice.toFixed(2)}
         </p>
       )}
+
+      {/* Display Seller Information */}
+      {seller && (
+        <div className="seller-info">
+          <p><strong>Seller Name:</strong> {seller.firstName} {seller.lastName}</p>
+          <p><strong>Seller Email:</strong> {seller.email}</p>
+        </div>
+      )}
+
       <div className="product-actions">
         <button onClick={handleBuyProduct} className="btn btn-buy">Buy Now</button>
         {product.rentPrice && (

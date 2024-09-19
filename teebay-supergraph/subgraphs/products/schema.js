@@ -24,6 +24,7 @@ const typeDefs = gql`
     product(id: ID!): Product!  # Query a single product by ID
     categories: [Category!]!
     browseProducts(userId: ID!): [Product!]! 
+    getTransaction(userId: ID!, transactionType: String!): [Product!]!
   }
 
   extend type Mutation {
