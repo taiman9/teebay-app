@@ -10,7 +10,7 @@ import cors from 'cors';
 async function startServer() {
   const app = express();
 
-  app.use(cors());  // Enable CORS for all routes
+  // app.use(cors());  // Enable CORS for all routes
 
   // Create a federated schema using buildSubgraphSchema
   const server = new ApolloServer({

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
-  type Product @key(fields: "id") {
+  type Product {
     id: ID!
     title: String!
     description: String!
