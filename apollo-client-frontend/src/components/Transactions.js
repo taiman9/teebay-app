@@ -86,7 +86,8 @@ function Transactions() {
                 <h3>{product.title}</h3>
                 <p><strong>Description:</strong> {product.description}</p>
                 <p><strong>Price:</strong> ${product.price}</p>
-                <p><strong>Transaction Date:</strong> {product.buyDate}</p>
+                {/* Convert buyDate to a human-readable string */}
+                <p><strong>Transaction Date:</strong> {product.buyDate ? new Date(parseInt(product.buyDate)).toLocaleDateString() : 'N/A'}</p>
 
                 {/* Button to fetch seller/buyer info */}
                 <button className="get-user-info-btn" onClick={() => handleGetUserInfo(product)}>

@@ -159,6 +159,7 @@ export const GET_TRANSACTION = gql`
       price
       userId
       buyerId
+      buyDate
       createdAt
     }
   }
