@@ -1,7 +1,7 @@
 // src/components/DeleteProduct.js
 import React, { useState }  from 'react';
 import { useMutation } from '@apollo/client';
-import { DELETE_PRODUCT } from '../mutation_product';  // Import the delete product mutation and the query to fetch all products
+import { DELETE_PRODUCT } from '../mutations/mutation_product';  // Import the delete product mutation and the query to fetch all products
 import './DeleteProduct.css';  // Import custom CSS for styling
 
 function DeleteProduct({ productId, onProductDeleted }) {

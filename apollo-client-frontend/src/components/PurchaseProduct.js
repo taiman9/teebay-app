@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { GET_PRODUCT_BY_ID } from '../mutation_product'; // Query to fetch product by ID
-import { GET_USER } from '../mutation_user'; // Query to fetch user by ID
+import { GET_PRODUCT_BY_ID } from '../mutations/mutation_product'; // Query to fetch product by ID
+import { GET_USER } from '../mutations/mutation_user'; // Query to fetch user by ID
 import './PurchaseProduct.css'; // Import CSS for styling
 
 function PurchaseProduct({ userId, productId }) {

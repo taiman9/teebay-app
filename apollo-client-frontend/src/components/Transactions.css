@@ -1,80 +1,83 @@
 .transactions-container {
-    padding: 20px;
-  }
-  
-  .transaction-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .transaction-buttons button {
-    padding: 8px 15px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .transaction-buttons button:hover {
-    background-color: #0056b3;
-  }
-  
-  .transaction-list {
-    margin-top: 20px;
-  }
-  
-  .transaction-item {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    width: 25%;
-  }
-  
-  .transaction-item h3 {
-    margin: 0 0 10px 0;
-  }
-  
-  .back-to-dashboard-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #2f8d94;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 8%;
-    font-size: 14px;
-  }
-  
-  .back-to-dashboard-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Style the Get Seller Info and Get Buyer Info buttons */
-  .get-user-info-btn {
-    background-color: #24883b;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 30%;
-  }
-  
-  .get-user-info-btn:hover {
-    background-color: #218838;
-  }
-  
-  .user-info {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-  }
-  
+  padding: 20px;
+}
+
+.transaction-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.transaction-buttons button {
+  padding: 8px 15px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.transaction-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.transaction-list {
+  margin-top: 20px;
+  display: flex;           /* Apply flexbox */
+  flex-wrap: wrap;         /* Allow items to wrap on smaller screens */
+  justify-content: center; /* Center the items horizontally */
+  gap: 20px;               /* Add space between items */
+}
+
+.transaction-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  width: 25%;
+}
+
+.transaction-item h3 {
+  margin: 0 0 10px 0;
+}
+
+.back-to-dashboard-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #2f8d94;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 8%;
+  font-size: 14px;
+}
+
+.back-to-dashboard-button:hover {
+  background-color: #0056b3;
+}
+
+/* Style the Get Seller Info and Get Buyer Info buttons */
+.get-user-info-btn {
+  background-color: #24883b;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 30%;
+}
+
+.get-user-info-btn:hover {
+  background-color: #218838;
+}
+
+.user-info {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}

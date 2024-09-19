@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';  // Import React Select
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_ALL_CATEGORIES, EDIT_PRODUCT, GET_PRODUCT_BY_ID } from '../mutation_product';  // Import necessary GraphQL queries and mutations
+import { GET_ALL_CATEGORIES, EDIT_PRODUCT, GET_PRODUCT_BY_ID } from '../mutations/mutation_product';  // Import necessary GraphQL queries and mutations
 import './EditProduct.css';  // Import custom CSS for styling
 
 function EditProduct({ productId, onClose, onProductUpdated }) {

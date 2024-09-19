@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { UPDATE_PRODUCT_BUYER } from '../mutation_product'; // Import the mutation to update product buyer info
-import { GET_PRODUCT_BY_ID } from '../mutation_product'; // Import necessary queries
+import { UPDATE_PRODUCT_BUYER, GET_PRODUCT_BY_ID } from '../mutations/mutation_product'; // Import necessary queries
 
 function BuyProduct({ userId, productId }) {
   const navigate = useNavigate(); // Hook to navigate programmatically

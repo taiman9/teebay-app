@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_USER } from '../mutation_user';  // Import the GraphQL query to get user info
+import { GET_USER } from '../mutations/mutation_user';  // Import the GraphQL query to get user info
 import { useUser } from '../context/UserContext';  // Import the custom hook to access the user context
 import { useNavigate } from 'react-router-dom';  // Import useNavigate to handle navigation
 import './UserInfo.css';  // Import custom CSS for styling

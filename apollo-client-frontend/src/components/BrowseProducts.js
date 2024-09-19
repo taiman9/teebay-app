@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
-import { BROWSE_PRODUCTS } from '../mutation_product';  // Import the query to fetch products
+import { BROWSE_PRODUCTS } from '../mutations/mutation_product';  // Import the query to fetch products
 import './BrowseProducts.css';  // Import CSS for styling
 
 // Helper function to format date

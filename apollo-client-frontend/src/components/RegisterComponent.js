@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import './Register.css'; // Import CSS for styling
-import { REGISTER_USER } from '../mutation_user';
+import { REGISTER_USER } from '../mutations/mutation_user';
 
 function Register() {
   const [email, setEmail] = useState('');

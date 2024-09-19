@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../mutation_product';  // Import the query to fetch products
+import { GET_ALL_PRODUCTS } from '../mutations/mutation_product';  // Import the query to fetch products
 import { useNavigate } from 'react-router-dom';  // Import Link and useNavigate for navigation
 import DeleteProduct from './DeleteProduct';  // Import DeleteProduct component
 import './ProductsList.css';  // Import CSS for styling

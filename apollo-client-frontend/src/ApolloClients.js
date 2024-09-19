@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
-import * as userOperations from './mutation_user';  // Import all user operations
-import * as productOperations from './mutation_product';  // Import all product operations
+import * as userOperations from './mutations/mutation_user';  // Import all user operations
+import * as productOperations from './mutations/mutation_product';  // Import all product operations
 
 // HTTP link for Users subgraph
 const usersLink = createHttpLink({
