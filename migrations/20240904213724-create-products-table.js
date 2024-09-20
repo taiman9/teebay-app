@@ -1,4 +1,5 @@
 // migrations/timestamp-create-products-table.js
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Products', {
@@ -23,10 +24,6 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users',  // Assuming Users table exists
-          key: 'id',
-        },
         onUpdate: 'CASCADE',
       },
       categoryIds: {

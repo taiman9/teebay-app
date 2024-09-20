@@ -5,10 +5,6 @@ module.exports = {
     await queryInterface.addColumn('Products', 'buyerId', {
       type: Sequelize.INTEGER,
       allowNull: true, // Allow null initially if the product has not been bought
-      references: {
-        model: 'Users', // Reference to the Users table
-        key: 'id'
-      },
       onUpdate: 'CASCADE', // Update on cascade
     });
     

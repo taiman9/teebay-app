@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     rentPrice: {
-      type: DataTypes.FLOAT,  // Set the type to FLOAT
-      allowNull: true,  // Allow null values
+      type: DataTypes.FLOAT,
+      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      onUpdate: 'CASCADE',  // Update on cascade
+      onUpdate: 'CASCADE',
     },
     categoryIds: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
@@ -30,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     buyerId: {
       type: DataTypes.INTEGER,
-      allowNull: true, // Allow null values initially
-      onUpdate: 'CASCADE',  // Update on cascade
+      allowNull: true,
+      onUpdate: 'CASCADE',
     },
     buyDate: {
       type: DataTypes.DATE,
-      allowNull: true, // Allow null values initially
+      allowNull: true,
     },
   });
 
@@ -43,8 +43,6 @@ module.exports = (sequelize, DataTypes) => {
   Product.associate = function (models) {
     Product.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
     Product.belongsToMany(models.Category, { through: 'ProductCategory', as: 'categories' });
-
-    // Adding association for buyerId
     Product.belongsTo(models.User, { foreignKey: 'buyerId', as: 'buyer' }); // New association for buyerId
   };
 
