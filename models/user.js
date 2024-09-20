@@ -23,9 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     phoneNumber: {
       type: DataTypes.STRING,
+      allowNull: false,
     }},{
       // Ensure timestamps are managed automatically
       timestamps: true,

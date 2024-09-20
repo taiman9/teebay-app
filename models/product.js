@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      onUpdate: 'CASCADE',  // Update on cascade
     },
     categoryIds: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
@@ -30,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
     buyerId: {
       type: DataTypes.INTEGER,
       allowNull: true, // Allow null values initially
-      references: {
-        model: 'Users',  // Reference to the Users table
-        key: 'id',
-      },
       onUpdate: 'CASCADE',  // Update on cascade
     },
     buyDate: {
