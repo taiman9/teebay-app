@@ -44,7 +44,7 @@ GRANT ALL PRIVILEGES ON DATABASE your_db_name TO your_user_name;
 
 ### Create Database tables and relations
 
-1. Update config/config.json as follows:
+1. Update `config/config.json` as follows:
 
 ```python
 {
