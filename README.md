@@ -103,7 +103,7 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO your_db_user;
 ```
 *your_db_user* above is *your_user_name*
 
-4. exit psql and run migrtaion files in home directory
+4. exit psql and run migration files in home directory
 ```
 npx sequelize-cli db:migrate
 ```
