@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "taiman9",
-    "password": "banani123",
-    "database": "teebay",
+    "username": "your_user_name",
+    "password": "your_password",
+    "database": "your_db_name",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "taiman9",
-    "password": "banani123",
-    "database": "teebay_test",
+    "username": "your_user_name",
+    "password": "your_password",
+    "database": "your_db_name_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "taiman9",
-    "password": "banani123",
-    "database": "teebay_prod",
+    "username": "your_user_name",
+    "password": "your_password",
+    "database": "your_db_name_prod",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
